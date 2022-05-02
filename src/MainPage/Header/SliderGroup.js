@@ -19,22 +19,39 @@ const SliderGroupContainer = styled.div`
   height: 824px;
 `;
 const SliderSectionImg = styled.div`
-  position: absolute;
-  top: 73px;
+  margin-top: 73px;
   width: 100%;
   height: 832px;
   background-size: cover;
   background-position: center;
 
   @media (max-width: 968px) {
-    width: 100%;
     height: 380px;
   }
 `;
 
 const ImgTextLogo = styled.div`
   position: absolute;
-  top: 230px;
+  top: 200px;
+  left: 30vw;
+  font-size: 3em;
+  color: #ea3232;
+  font-weight: 600;
+  font-family: Salsa-Regular;
+  @media (max-width: 1780px) {
+    top: 20%;
+  }
+  @media (max-width: 1500px) {
+    text-shadow: 2px 2px 2px gray;
+  }
+  @media (max-width: 968px) {
+    display: none;
+  }
+`;
+const ImgTextLogo2 = styled.div`
+  display: none;
+  position: absolute;
+  top: 200px;
   left: 30vw;
   font-size: 3em;
   color: #ea3232;
@@ -48,6 +65,8 @@ const ImgTextLogo = styled.div`
   }
   @media (max-width: 968px) {
     font-size: 20px;
+    color: #fff;
+    display: block;
   }
   @media (max-width: 768px) {
   }
@@ -66,13 +85,12 @@ const BtnPrev = styled.div`
   background-repeat: no-repeat;
 
   @media (max-width: 968px) {
-    top: 30%;
+    top: 20%;
   }
 `;
 
 const BtnNext = styled.div`
   position: absolute;
-
   right: 10px;
   top: 50%;
   width: 30px;
@@ -84,150 +102,147 @@ const BtnNext = styled.div`
   background-repeat: no-repeat;
 
   @media (max-width: 968px) {
-    top: 30%;
+    top: 20%;
   }
 `;
 
 class SliderGroup extends Component {
   state = {
     fade: false,
-    ImgArr: [
-      { id: 1, path: img01, resPath: img01, title: "#좋은것만 드려요~" },
-      { id: 2, path: img02, resPath: img02, title: "#좋은것만 드려요~" },
-      { id: 3, path: img03, resPath: img03, title: "#좋은것만 드려요~" },
-      { id: 4, path: img04, resPath: img04 },
-      { id: 5, path: img05, resPath: img05, title: "#좋은것만 드려요~" },
-      { id: 6, path: img01, resPath: img01, title: "#좋은것만 드려요~" },
-      { id: 7, path: img02, resPath: img02, title: "#좋은것만 드려요~" },
-    ],
+    background: img01,
+    left: "10vw",
+    top: "320px",
+    color: "#fff",
+    responsiveTop: "150px",
+    responsiveLeft: "50%",
+    transformX: "translateX(-50%)",
   };
 
-  mainSlider;
-  subSlider;
-  entireContainer;
-  prevButton;
-  nextButton;
-  textLogo;
-  currentCount = 0;
-  tempArr = [];
-  initSlider = () => {
-    for (let i = 0; i < 6; i++) {
-      document.querySelectorAll(".selectSlider")[i].style.left = 100 * i + "%";
+  mainSliderRef;
+  imgTextLogoRef;
+  imgTextLogoRef980;
+  currentCount = 1;
+
+  tempImg = {
+    img01: { id: 1, path: img01, left: "10vw", top: "320px", color: "#fff" },
+    img02: { id: 2, path: img02, left: "25vw", top: "200px", color: "#ea3232" },
+    img03: { id: 3, path: img03, left: "10vw", top: "200px", color: "#ea3232" },
+    img04: { id: 4, path: img04, left: "10vw", top: "300px", color: "#ea3232" },
+    img05: { id: 5, path: img05, left: "10vw", top: "300px", color: "#ea3232" },
+  };
+  resImg = {
+    img01: {
+      id: 1,
+      path: img01,
+      left: "50%",
+      top: "150px",
+      transformX: "translateX(-50%)",
+      color: "#fff",
+    },
+    img02: {
+      id: 2,
+      path: img02,
+      left: "25vw",
+      top: "100px",
+      transformX: "translateX(-30%)",
+      color: "#ea3232",
+    },
+    img03: {
+      id: 3,
+      path: img03,
+      left: "10vw",
+      top: "90px",
+      transformX: "translateX(0%)",
+      color: "#ea3232",
+    },
+    img04: {
+      id: 4,
+      path: img04,
+      left: "10vw",
+      top: "100px",
+      transformX: "translateX(-20%)",
+      color: "#ea3232",
+    },
+    img05: {
+      id: 5,
+      path: img05,
+      left: "50%",
+      top: "150px",
+      transformX: "translateX(-50%)",
+      color: "#fff",
+    },
+  };
+
+  initSlider = (idx) => {
+    this.mainSliderRef.style.backgroundImage = `url(${this.state.background})`;
+    this.imgTextLogoRef.style.color = this.state.color;
+    this.imgTextLogoRef.style.left = this.state.left;
+    this.imgTextLogoRef.style.top = this.state.top;
+    if (window.innerWidth <= 980) {
+      this.imgTextLogoRef980.style.left = this.state.responsiveLeft;
+      this.imgTextLogoRef980.style.top = this.state.responsiveTop;
+      this.imgTextLogoRef980.style.color = this.state.color;
+      this.imgTextLogoRef980.style.transform = this.state.transformX;
     }
   };
-
-  executeMovingSlide = (idx) => {
-    this.mainSlider.style.left = idx * -100 + "%";
-
-    this.currentCount = idx;
+  sliderStyleManger = () => {
+    let contactImg = `img0${this.currentCount}`;
+    this.setState({ top: this.tempImg[contactImg].top });
+    this.setState({ left: this.tempImg[contactImg].left });
+    this.setState({ background: this.tempImg[contactImg].path });
+    this.setState({ color: this.tempImg[contactImg].color });
+    if (window.innerWidth <= 980) {
+      this.setState({ responsiveTop: this.resImg[contactImg].top });
+      this.setState({ responsiveLeft: this.resImg[contactImg].left });
+      this.setState({ transformX: this.resImg[contactImg].transformX });
+      this.setState({ color: this.resImg[contactImg].color });
+    }
   };
-
   movingPrevSlide = () => {
-    this.executeMovingSlide(this.currentCount - 1);
-
-    if (this.currentCount === -1) {
-      this.executeMovingSlide(this.currentCount + 6);
-      this.currentCount = 6;
-
-      console.log("변화:" + this.currentCount);
+    this.currentCount -= 1;
+    if (this.currentCount === 0) {
+      this.currentCount = 5;
     }
-
-    console.log(this.mainSlider.style.left);
+    this.sliderStyleManger();
   };
 
   movingNextSlide = () => {
-    this.executeMovingSlide(this.currentCount + 1);
+    this.currentCount += 1;
 
-    console.log(this.mainSlider.classList);
     if (this.currentCount === 6) {
-      this.executeMovingSlide(this.currentCount - 6);
-      this.currentCount = 0;
-    } else if (this.currentCount > 6) {
-      this.currentCount = 0;
+      this.currentCount = 1;
     }
-    console.log(this.mainSlider.style.left);
+    this.sliderStyleManger();
   };
 
-  sliderImg = this.state.ImgArr.map((v) => {
-    const style = {
-      backgroundImage: `url(${v.path})`,
-      backgroundRepeat: "no-repeat",
-    };
-
-    let colorStyle = {};
-
-    switch (v.id) {
-      case 3:
-        colorStyle = {
-          top: "10%",
-        };
-        break;
-      case 5:
-        colorStyle = {
-          left: "60vw",
-        };
-        break;
-      case 6:
-        if (window.innerWidth <= 968) {
-          colorStyle = {
-            top: "50%",
-            transform: "translateY(-50%)",
-            color: "#ffffff",
-          };
-        } else {
-          colorStyle = {
-            top: "40%",
-            transform: "translateY(-40%)",
-            color: "#ffffff",
-          };
-        }
-
-        break;
-      default:
-        colorStyle = { color: " #d20b2f" };
-    }
-
-    return (
-      <SliderSectionImg
-        key={v.id}
-        className="selectSlider"
-        style={style}
-        ref={(ref) => (this.subSlider = ref)}
-      >
-        {v.id ? (
-          <ImgTextLogo style={colorStyle}>{v.title}</ImgTextLogo>
-        ) : (
-          <ImgTextLogo>{v.title}</ImgTextLogo>
-        )}
-      </SliderSectionImg>
-    );
-  });
-
-  IntervalTimer;
-  Timeout;
-  timeCount = 1;
   componentDidMount() {
     this.initSlider();
   }
 
-  componentWillUnmount() {}
+  componentDidUpdate() {
+    this.initSlider();
+  }
 
   render() {
     return (
       <>
-        <EntireSliderContainer ref={(ref) => (this.entireContainer = ref)}>
-          <SliderGroupContainer ref={(ref) => (this.mainSlider = ref)}>
-            {this.sliderImg}
+        <EntireSliderContainer>
+          <SliderGroupContainer>
+            <SliderSectionImg
+              className="selectSlider"
+              ref={(ref) => (this.mainSliderRef = ref)}
+            >
+              <ImgTextLogo ref={(ref) => (this.imgTextLogoRef = ref)}>
+                #좋은것만 드려요~
+              </ImgTextLogo>
+              <ImgTextLogo2 ref={(ref) => (this.imgTextLogoRef980 = ref)}>
+                #좋은것만 드려요~
+              </ImgTextLogo2>
+            </SliderSectionImg>
           </SliderGroupContainer>
 
-          <BtnPrev
-            onClick={this.movingPrevSlide}
-            ref={(ref) => (this.prevButton = ref)}
-          ></BtnPrev>
-          <BtnNext
-            onClick={this.movingNextSlide}
-            ref={(ref) => (this.nextButton = ref)}
-          />
+          <BtnPrev onClick={this.movingPrevSlide} />
+          <BtnNext onClick={this.movingNextSlide} />
         </EntireSliderContainer>
       </>
     );

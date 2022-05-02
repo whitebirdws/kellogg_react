@@ -433,20 +433,23 @@ class Recipes extends Component {
   };
 
   render() {
-    const recipeItem = this.RecipeImgList.filter((data) => {
+    function tempFunc(data) {
       if (this.state.searchResult === null) {
         return data;
       } else if (data.title.indexOf(this.state.searchResult) > -1) {
         return data;
       }
-    }).map((value) => {
-      return (
-        <ProductListLi>
-          <RecipesImg src={require(`${value.path}`).default} />
-          <ProductSubList>{value.title}</ProductSubList>
-        </ProductListLi>
-      );
-    });
+    }
+    const recipeItem = this.RecipeImgList.filter((data) => tempFunc(data)).map(
+      (value) => {
+        return (
+          <ProductListLi>
+            <RecipesImg src={require(`${value.path}`).default} />
+            <ProductSubList>{value.title}</ProductSubList>
+          </ProductListLi>
+        );
+      }
+    );
     return (
       <>
         <Header />

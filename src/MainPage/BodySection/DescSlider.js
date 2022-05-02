@@ -28,13 +28,34 @@ const EntireDescSliderLayout = styled.div`
   @media (max-width: 1180px) {
     height: 1200px;
   }
+  @media (max-width: 768px) {
+    height: 960px;
+  }
+
   overflow: hidden;
 `;
 const DescSliderLayout = styled.div`
   position: relative;
+  display: flex;
   margin-top: 46px;
   background-color: #ccc;
   transition: all 0.5s ease-in-out;
+  @media (max-width: 980px) {
+    display: none;
+  }
+`;
+const DescSliderLayout980 = styled.div`
+  display: none;
+  position: absolute;
+  margin-top: 15px;
+  background-color: #ccc;
+  transition: all 0.5s ease-in-out;
+  @media (max-width: 980px) {
+    display: block;
+    width: 100%;
+
+    background-color: tomato;
+  }
 `;
 const DescSliderSection01 = styled.div``;
 const Detail01TextlLayout = styled.div`
@@ -58,7 +79,6 @@ const Detail01Text = styled.div`
   overflow: hidden;
 `;
 const DescContainer = styled.div`
-  /* width: 100%; */
   height: 220px;
   position: relative;
   top: -20px;
@@ -98,7 +118,7 @@ const DescLi = styled.li`
     width: 60px;
     height: 60px;
     background-image: url(${ProductCalory});
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     margin-left: 50px;
   }
@@ -179,10 +199,11 @@ const LiSpan = styled.span`
   }
 `;
 const PrevBtn = styled.div`
-  width: 50px;
-  height: 50px;
   position: absolute;
   top: 300px;
+  width: 50px;
+  height: 50px;
+
   background-image: url(${prevBtnImg});
   background-size: cover;
   background-position: center;
@@ -200,8 +221,6 @@ const NextBtn = styled.div`
   cursor: pointer;
 `;
 const DescSliderUl = styled.ul`
-  /* display: flex; */
-  position: absolute;
   display: flex;
   @media (max-width: 1180px) {
     flex-direction: column;
@@ -209,18 +228,37 @@ const DescSliderUl = styled.ul`
 `;
 const DescSliderLi = styled.li`
   width: 590px;
-
   &:nth-child(1) {
   }
   &:nth-child(2) {
     background-color: #fdf3f3;
   }
-
-  @media (max-width: 1180px) {
-    width: 100vw;
+  @media (max-width: 980px) {
+    &:nth-child(1) {
+      width: 960px;
+      height: 580px;
+    }
+    &:nth-child(2) {
+      width: 960px;
+      height: 620px;
+      background-color: #fdf3f3;
+    }
+  }
+  @media (max-width: 960px) {
+    &:nth-child(1) {
+      width: 100%;
+    }
+    &:nth-child(2) {
+      width: 100%;
+    }
   }
   @media (max-width: 768px) {
-    min-width: 465px;
+    &:nth-child(1) {
+      height: 384px;
+    }
+    &:nth-child(2) {
+      height: 576px;
+    }
   }
 `;
 
@@ -271,19 +309,19 @@ class DescSlider extends Component {
     },
   ];
   descSlider;
+  descSlider980;
   descSliderImg;
+  descSliderImg2;
 
-  currentCounter = 0;
+  currentCounter = 1;
   initSlider = () => {
-    for (let i = 0; i < 4; i++) {
-      // document.querySelectorAll(".descSliderImg")[i].style.left = 100 * i + "%";
-      document.querySelectorAll(".descSliderImg")[i].style.left = 100 * i + "%";
-      console.log(this.descSliderImg.style.left);
-    }
+    this.descSliderImg.style.left = 100 + "%";
   };
 
   excueteSlider = (idx) => {
     this.descSlider.style.left = -100 * idx + "%";
+    this.descSlider980.style.top = -100 * idx + "%";
+
     this.currentCounter = idx;
   };
   movingPrevSlider = () => {
@@ -291,8 +329,6 @@ class DescSlider extends Component {
     if (this.currentCounter === -1) {
       this.excueteSlider((this.currentCounter = 3));
     }
-
-    console.log(this.descSlider.style.left);
   };
   movingNextSlider = () => {
     this.excueteSlider(this.currentCounter + 1);
@@ -300,74 +336,104 @@ class DescSlider extends Component {
     if (this.currentCounter === 4) {
       this.excueteSlider((this.currentCounter = 0));
     }
-
-    console.log(this.descSlider.style.left);
   };
   componentDidMount() {
     this.initSlider();
   }
+  componentDidUpdate() {}
+
   render() {
+    const tempLayout = (v, sliderStyle) => {
+      const categoryStyle = {
+        backgroundImage: `url(${v.categoryImg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      };
+      return (
+        <>
+          <DescSliderLi>
+            <DescSliderSection01 style={sliderStyle} />
+          </DescSliderLi>
+          <DescSliderLi>
+            <Detail01TextlLayout>
+              <CategoryImg style={categoryStyle} />
+              <Detail01Text>{v.title}</Detail01Text>
+              <Link to="/BrandAndProducts">
+                <ExtensionText></ExtensionText>
+              </Link>
+              <DescContainer>
+                <DescUl>
+                  <DescLi></DescLi>
+                  <DescLi></DescLi>
+                  <DescLi></DescLi>
+                </DescUl>
+                <DescUl02>
+                  <DescLi02>중량</DescLi02>
+                  <DescLi02>유통기한</DescLi02>
+                  <DescLi02>열량</DescLi02>
+                </DescUl02>
+                <LiSpan>{v.subtitle}</LiSpan>
+                <DescUl03>
+                  <DescLi03>{v.weight}</DescLi03>
+                  <DescLi03>{v.expirationDate}</DescLi03>
+                  <DescLi03>{v.calorie}</DescLi03>
+                </DescUl03>
+              </DescContainer>
+            </Detail01TextlLayout>
+          </DescSliderLi>
+        </>
+      );
+    };
     const DescSliderGroup = this.DescSliderArr.map((v) => {
       const sliderStyle = {
         backgroundImage: `url(${v.path})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        height: "573px",
+        height: "580px",
       };
-      const categoryStyle = {
-        backgroundImage: `url(${v.categoryImg})`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      };
+
       return (
         <React.Fragment key={v.id}>
-          <DescSliderUl className="descSliderImg">
-            <DescSliderLi>
-              <DescSliderSection01
-                ref={(ref) => (this.descSliderImg = ref)}
-                style={sliderStyle}
-              />
-            </DescSliderLi>
-            <DescSliderLi>
-              <Detail01TextlLayout>
-                <CategoryImg style={categoryStyle} />
-                <Detail01Text>{v.title}</Detail01Text>
-                <Link to="/BrandAndProducts">
-                  <ExtensionText></ExtensionText>
-                </Link>
-                <DescContainer>
-                  <DescUl>
-                    <DescLi></DescLi>
-                    <DescLi></DescLi>
-                    <DescLi></DescLi>
-                  </DescUl>
-                  <DescUl02>
-                    <DescLi02>중량</DescLi02>
-                    <DescLi02>유통기한</DescLi02>
-                    <DescLi02>열량</DescLi02>
-                  </DescUl02>
-                  <LiSpan>{v.subtitle}</LiSpan>
-                  <DescUl03>
-                    <DescLi03>{v.weight}</DescLi03>
-                    <DescLi03>{v.expirationDate}</DescLi03>
-                    <DescLi03>{v.calorie}</DescLi03>
-                  </DescUl03>
-                </DescContainer>
-              </Detail01TextlLayout>
-            </DescSliderLi>
+          <DescSliderUl
+            className="descSliderImg"
+            ref={(ref) => (this.descSliderImg = ref)}
+          >
+            {tempLayout(v, sliderStyle)}
           </DescSliderUl>
         </React.Fragment>
       );
     });
+    const DescSliderGroup980 = this.DescSliderArr.map((v) => {
+      const sliderStyle = {
+        backgroundImage: `url(${v.path})`,
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        height: "580px",
+      };
 
+      return (
+        <React.Fragment key={v.id}>
+          <DescSliderUl
+            className="descSliderImg"
+            ref={(ref) => (this.descSliderImg2 = ref)}
+          >
+            {tempLayout(v, sliderStyle)}
+          </DescSliderUl>
+        </React.Fragment>
+      );
+    });
     return (
       <>
         <EntireDescSliderLayout>
           <DescSliderLayout ref={(ref) => (this.descSlider = ref)}>
             {DescSliderGroup}
           </DescSliderLayout>
+          <DescSliderLayout980 ref={(ref) => (this.descSlider980 = ref)}>
+            {DescSliderGroup980}
+          </DescSliderLayout980>
           <PrevBtn onClick={this.movingPrevSlider} />
           <NextBtn onClick={this.movingNextSlider} />
         </EntireDescSliderLayout>

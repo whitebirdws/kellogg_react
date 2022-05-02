@@ -467,13 +467,11 @@ class BrandAndProducts extends Component {
 
   onClickKeyword = (e) => {
     const dataName = e.target.getAttribute("data-name");
-    console.log(typeof dataName);
 
     this.setState({
       searchCategory: dataName,
       conditionView: 1,
     });
-    // console.log(this.state.searchCategory);
   };
 
   settingProudct = () => {
@@ -483,8 +481,6 @@ class BrandAndProducts extends Component {
         conditionView: 0,
       };
     });
-
-    console.log(this.state.searchResult);
   };
   submitProduct = (e) => {
     e.preventDefault();
@@ -492,20 +488,20 @@ class BrandAndProducts extends Component {
   };
   searchProduct = () => {
     this.settingProudct();
-    console.log(this.state.searchResult);
   };
   cancelSearch = () => {
     this.findProduct.value = "";
   };
 
   render() {
-    const items = this.ImgList.filter((data) => {
+    function tempFunc(data) {
       if (this.state.searchResult == null) {
         return data;
       } else if (data.title.indexOf(this.state.searchResult) > -1) {
         return data;
       }
-    }).map((value) => {
+    }
+    const items = this.ImgList.filter((data) => tempFunc(data)).map((value) => {
       return (
         <ProductListLi key={value.id}>
           <Img src={require(`${value.path}`).default} />
@@ -516,24 +512,26 @@ class BrandAndProducts extends Component {
         </ProductListLi>
       );
     });
-
-    const items02 = this.ImgList.filter((data) => {
+    function tempFunc2(data) {
       if (this.state.searchCategory == null) {
         return data;
       } else if (data.category.indexOf(this.state.searchCategory) > -1) {
         return data;
       }
-    }).map((value) => {
-      return (
-        <ProductListLi key={value.id}>
-          <Img src={require(`${value.path}`).default} />
-          <ProductSubList>
-            {value.title}
-            <p>{value.subtitle}</p>
-          </ProductSubList>
-        </ProductListLi>
-      );
-    });
+    }
+    const items02 = this.ImgList.filter((data) => tempFunc2(data)).map(
+      (value) => {
+        return (
+          <ProductListLi key={value.id}>
+            <Img src={require(`${value.path}`).default} />
+            <ProductSubList>
+              {value.title}
+              <p>{value.subtitle}</p>
+            </ProductSubList>
+          </ProductListLi>
+        );
+      }
+    );
 
     return (
       <>

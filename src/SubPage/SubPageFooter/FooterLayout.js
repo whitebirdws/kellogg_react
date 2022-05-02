@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { IoIosArrowUp } from "react-icons/io";
-import logo from "../../img/logo_white.png";
 import icon_foot01 from "../../img/icon_gnb_youtube.png";
 import icon_foot02 from "../../img/icon_foot_instagram.png";
 import icon_foot03 from "../../img/icon_foot_naver_blog.png";
@@ -9,18 +8,14 @@ const Footer = styled.div`
   min-width: 450px;
   height: 70px;
   position: relative;
-  /* bottom: -20px; */
   z-index: 1;
   color: white;
   background-color: #d20b2f;
-  @media (max-width: 468px) {
-  }
 `;
 
 const FooterInnerContainer = styled.div`
   width: 1180px;
   margin: 0 auto;
-
   @media (max-width: 1300px) {
     width: 100%;
   }

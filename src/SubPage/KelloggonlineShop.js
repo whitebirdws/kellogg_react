@@ -242,12 +242,6 @@ const KelloggAdvertisementImg = styled.div`
     height: 300px;
   }
 `;
-const BrandAndProductsContainer = styled.div`
-  position: relative;
-  width: 100%;
-  left: 50%;
-  transform: translate(-50%);
-`;
 const ShopTitleStyle = styled.div`
   width: 200px;
   height: 200px;
