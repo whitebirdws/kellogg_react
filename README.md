@@ -1,4 +1,6 @@
 ![image4](https://user-images.githubusercontent.com/104630719/166416971-3668392e-f4e7-49ff-b2fc-b3475e68a376.png)
+## □.웹사이트 URL
+- <a href="https://reliable-queijadas-d52bd7.netlify.app">https://reliable-queijadas-d52bd7.netlify.app</a>
 
 ## □.프로젝트 명칭 및 소개
 - 프로젝트명: kellogg_react
@@ -6,10 +8,10 @@
 <br/>
 
 ## □.프로젝트의 목적
-React로 다수의 페이지를 가진 웹사이트를 제작하고 싶어 진행하였던 프로젝트였습니다.
-<br/>
-웹사이트의 이미지를 참고하여  퍼블리싱뿐만 아니라  홈페이지에 구현되어져 있던
-다수의 기능들을 구현하고자 하였습니다.<br/>
+- React로 다수의 페이지를 가진 웹사이트를 제작하고 싶어 진행하였던 프로젝트였습니다.
+
+- 웹사이트의 이미지를 참고하여  퍼블리싱뿐만 아니라  홈페이지에 구현되어져 있던
+다수의 기능들을 구현하고자 하였습니다.
 
 
 ## □.프로젝트의 component 명칭 및 구성
