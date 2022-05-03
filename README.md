@@ -1,31 +1,13 @@
 # kellogg_react
-kelloggkorea 홈페이지 이미지만을 참고하여 만든 토이프로젝트 입니다.
+kelloggkorea 홈페이지 이미지를 참고하여 만든 토이프로젝트 입니다.
 ## 프로젝트의 목적
 React로 다수의 페이지를 가진 웹사이트를 제작하고 싶어 진행하였던 프로젝트였습니다.
 <br/>
 웹사이트의 이미지를 참고하여  퍼블리싱뿐만 아니라  홈페이지에 구현되어져 있던
 다수의 기능들을 구현하고자 하였습니다.<br/>
 
-## 구현 페이지 목록 
-> 메인페이지
->>구현내용( 페이지 구현 및 이미지 슬라이더 구현 ) 
-
-> Brand&products 
->> 구현내용(페이지 구현 및 제품검색, 키워드 검색(카테코리 분류))
-
-> Kellogg's Shop 
->>구현내용( 페이지 구현 ) 
-
-> Recipe 
->>구현내용( 페이지 구현 및 제품 검색 ) 
-
-> Cereal & Nutrition 
->>구현내용( 페이지 구현) 
-
-> Better Days 
->>구현내용( 페이지 구현) 
-
-> About Kellogg's 
->>구현내용( 페이지 구현) 
 
 ## component 구조
+
+![PageGuide](https://user-images.githubusercontent.com/104630719/166416060-b97818a6-5635-4917-b2e0-eaae1552b886.png)
+
